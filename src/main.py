@@ -12,6 +12,9 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 grid = Grid()
 running = True
 
+start = None
+end = None
+
 # Game loop
 while running:
 
@@ -28,6 +31,48 @@ while running:
             if event.key == K_ESCAPE:
                 running = False
 
+        # Left mouse click
+        if pygame.mouse.get_pressed(3)[0]:
+            x, y = pygame.mouse.get_pos()
+            i = (x - MARGIN_SIZE) // NODE_SIZE
+            j = (y - MARGIN_SIZE) // NODE_SIZE
+
+            if i < 0 or i >= len(grid.array[0]) or j < 0 or j >= len(grid.array[0]):
+                continue
+
+            node = grid.array[i][j]
+
+            if not start and node.is_empty():
+                start = node
+                start.set_start()
+
+            elif not end and node.is_empty():
+                end = node
+                end.set_end()
+
+            elif end != node and start != node:
+                node.set_barrier()
+
+        # Right mouse click
+        if pygame.mouse.get_pressed(3)[2]:
+            x, y = pygame.mouse.get_pos()
+            i = (x - MARGIN_SIZE) // NODE_SIZE
+            j = (y - MARGIN_SIZE) // NODE_SIZE
+
+            if i < 0 or i >= len(grid.array[0]) or j < 0 or j >= len(grid.array[0]):
+                continue
+
+            node = grid.array[i][j]
+
+            if node == start:
+                start = None
+                node.set_empty()
+            elif node == end:
+                end = None
+                node.set_empty()
+            else:
+                node.set_empty()
+
         # User clicked close window button
-        elif event.type == QUIT:
+        if event.type == QUIT:
             running = False

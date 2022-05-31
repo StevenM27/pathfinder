@@ -16,3 +16,27 @@ class Node:
     # Note: this position represents the top-left corner of the Node
     def get_pos(self):
         return self.x, self.y
+
+    def set_barrier(self):
+        self.color = BLACK
+
+    def is_barrier(self):
+        return self.color == BLACK
+
+    def set_start(self):
+        self.color = GREEN
+
+    def is_start(self):
+        return self.color == GREEN
+
+    def set_end(self):
+        self.color = PURPLE
+
+    def is_end(self):
+        return self.color == PURPLE
+
+    def set_empty(self):
+        self.color = WHITE
+
+    def is_empty(self):
+        return self.color == WHITE
