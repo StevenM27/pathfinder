@@ -4,14 +4,12 @@ from node import Node
 
 
 class Grid:
-    # Populates the grid on initialization
     def __init__(self):
         self.array = []
-        num_rows_and_cols = (SCREEN_HEIGHT - (2 * MARGIN_SIZE)) // NODE_SIZE
 
-        for i in range(num_rows_and_cols):
+        for i in range(NUM_ROWS):
             self.array.append([])
-            for j in range(num_rows_and_cols):
+            for j in range(NUM_ROWS):
                 self.array[i].append(Node(i, j))
 
     def draw_grid(self, screen):

@@ -4,6 +4,7 @@ from pygame.locals import *
 # Local modules
 from config import *
 from grid import Grid
+from search import *
 
 # Initialize pygame display
 pygame.init()
@@ -14,6 +15,8 @@ running = True
 
 start = None
 end = None
+
+started = False
 
 # Game loop
 while running:
@@ -26,6 +29,22 @@ while running:
 
         # User clicked a key
         if event.type == KEYDOWN:
+
+            # User clicked the "D" key
+            if event.key == K_d and not started:
+                if start and end:
+                    # Dijkstra's algorithm
+                    started = True
+                    dijkstra(start, end, grid, screen, pygame)
+                else:
+                    pass
+                started = False
+
+            # reset grid
+            if event.key == K_r and not started:
+                grid = Grid()
+                start = None
+                end = None
 
             # User clicked the ESCAPE key, closing the game
             if event.key == K_ESCAPE:

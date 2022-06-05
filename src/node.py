@@ -4,9 +4,27 @@ import pygame
 
 class Node:
     def __init__(self, row, col):
+        self.row = row
+        self.col = col
         self.x = MARGIN_SIZE + (row * NODE_SIZE)
         self.y = MARGIN_SIZE + (col * NODE_SIZE)
         self.color = WHITE
+        self.valid_neighbors = []
+
+    def update_valid_neighbors(self, grid):
+        self.valid_neighbors = []
+
+        if self.row < NUM_ROWS - 1 and grid.array[self.row + 1][self.col].is_valid():
+            self.valid_neighbors.append(grid.array[self.row + 1][self.col])
+
+        if self.row > 0 and grid.array[self.row - 1][self.col].is_valid():
+            self.valid_neighbors.append(grid.array[self.row - 1][self.col])
+
+        if self.col < NUM_ROWS - 1 and grid.array[self.row][self.col + 1].is_valid():
+            self.valid_neighbors.append(grid.array[self.row][self.col + 1])
+
+        if self.col > 0 and grid.array[self.row][self.col - 1].is_valid():
+            self.valid_neighbors.append(grid.array[self.row][self.col - 1])
 
     # Draws the current Node
     def draw_node(self, screen):
@@ -20,14 +38,17 @@ class Node:
     def set_barrier(self):
         self.color = BLACK
 
+    def is_valid(self):
+        return not self.is_barrier() and not self.is_visited()
+
     def is_barrier(self):
         return self.color == BLACK
 
     def set_start(self):
-        self.color = GREEN
+        self.color = PINK
 
     def is_start(self):
-        return self.color == GREEN
+        return self.color == PINK
 
     def set_end(self):
         self.color = PURPLE
@@ -35,8 +56,26 @@ class Node:
     def is_end(self):
         return self.color == PURPLE
 
+    def set_checking(self):
+        self.color = GREEN
+
+    def is_checking(self):
+        return self.color == GREEN
+
+    def set_path(self):
+        self.color = BLUE
+
+    def is_path(self):
+        return self.color == BLUE
+
     def set_empty(self):
         self.color = WHITE
 
     def is_empty(self):
         return self.color == WHITE
+
+    def set_visited(self):
+        self.color = RED
+
+    def is_visited(self):
+        return self.color == RED
