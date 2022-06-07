@@ -11,10 +11,25 @@ class Node:
         self.color = WHITE
         self.valid_neighbors = []
 
+    def update_maze_neighbors(self, grid, visited):
+        self.valid_neighbors = []
+
+        if self.row < NUM_COLS - 3 and grid.array[self.row + 2][self.col] not in visited:
+            self.valid_neighbors.append(grid.array[self.row + 2][self.col])
+
+        if self.row > 2 and grid.array[self.row - 2][self.col] not in visited:
+            self.valid_neighbors.append(grid.array[self.row - 2][self.col])
+
+        if self.col < NUM_ROWS - 3 and grid.array[self.row][self.col + 2] not in visited:
+            self.valid_neighbors.append(grid.array[self.row][self.col + 2])
+
+        if self.col > 2 and grid.array[self.row][self.col - 2] not in visited:
+            self.valid_neighbors.append(grid.array[self.row][self.col - 2])
+
     def update_valid_neighbors(self, grid):
         self.valid_neighbors = []
 
-        if self.row < NUM_ROWS - 1 and grid.array[self.row + 1][self.col].is_valid():
+        if self.row < NUM_COLS - 1 and grid.array[self.row + 1][self.col].is_valid():
             self.valid_neighbors.append(grid.array[self.row + 1][self.col])
 
         if self.row > 0 and grid.array[self.row - 1][self.col].is_valid():

@@ -30,18 +30,30 @@ while running:
         # User clicked a key
         if event.type == KEYDOWN:
 
+            if event.key == K_m and not started:
+                grid = Grid()
+                start = None
+                end = None
+
+                grid.generate_maze()
+
+            if event.key == K_a and not started:
+                if start and end:
+                    # A star algorithm
+                    started = True
+                    a_star(start, end, grid, screen, pygame)
+                    started = False
+
             # User clicked the "D" key
             if event.key == K_d and not started:
                 if start and end:
                     # Dijkstra's algorithm
                     started = True
                     dijkstra(start, end, grid, screen, pygame)
-                else:
-                    pass
-                started = False
+                    started = False
 
             # reset grid
-            if event.key == K_r and not started:
+            if event.key == K_r:
                 grid = Grid()
                 start = None
                 end = None
@@ -56,7 +68,7 @@ while running:
             i = (x - MARGIN_SIZE) // NODE_SIZE
             j = (y - MARGIN_SIZE) // NODE_SIZE
 
-            if i < 0 or i >= len(grid.array[0]) or j < 0 or j >= len(grid.array[0]):
+            if i < 0 or i >= len(grid.array) or j < 0 or j >= len(grid.array[0]):
                 continue
 
             node = grid.array[i][j]
@@ -78,7 +90,7 @@ while running:
             i = (x - MARGIN_SIZE) // NODE_SIZE
             j = (y - MARGIN_SIZE) // NODE_SIZE
 
-            if i < 0 or i >= len(grid.array[0]) or j < 0 or j >= len(grid.array[0]):
+            if i < 0 or i >= len(grid.array) or j < 0 or j >= len(grid.array[0]):
                 continue
 
             node = grid.array[i][j]
